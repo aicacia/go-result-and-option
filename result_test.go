@@ -59,3 +59,19 @@ func TestUnwrapOnErr(t *testing.T) {
 	result := Err[int](fmt.Errorf("error"))
 	result.Unwrap()
 }
+
+func TestResultOptionSome(t *testing.T) {
+	result := Ok[int](10)
+	option := result.Option()
+	if option.IsNone() {
+		t.Error("result is some")
+	}
+}
+
+func TestResultOptionNone(t *testing.T) {
+	result := Err[int](fmt.Errorf("error"))
+	option := result.Option()
+	if option.IsSome() {
+		t.Error("result is not none")
+	}
+}

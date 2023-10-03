@@ -1,5 +1,9 @@
 package types
 
+import "fmt"
+
+var ErrNone = fmt.Errorf("option is a none value")
+
 type Option[T any] struct {
 	value any
 }
@@ -44,5 +48,13 @@ func (o *Option[T]) Take() (T, bool) {
 		value := o.value.(T)
 		o.value = nil
 		return value, true
+	}
+}
+
+func (o *Option[T]) Ok() Result[T] {
+	if value, ok := o.Some(); ok {
+		return Ok[T](value)
+	} else {
+		return Err[T](ErrNone)
 	}
 }

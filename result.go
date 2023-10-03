@@ -46,3 +46,11 @@ func (o *Result[T]) Unwrap() T {
 	}
 	panic(fmt.Sprintf("unwrapped result with error: %s", o.err))
 }
+
+func (o *Result[T]) Option() Option[T] {
+	if value, ok := o.Ok(); ok {
+		return Some(value)
+	} else {
+		return None[T]()
+	}
+}
