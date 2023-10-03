@@ -1,1 +1,1 @@
-# types for golang, Result, Option, AtomicValue
+# Result and Option types for golang
