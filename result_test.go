@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestOk(t *testing.T) {
+func TestResultOk(t *testing.T) {
 	result := Ok[int](10)
 	var x int
 	if y, ok := result.Ok(); ok {
@@ -18,14 +18,14 @@ func TestOk(t *testing.T) {
 	}
 }
 
-func TestOkFail(t *testing.T) {
+func TestResultOkFail(t *testing.T) {
 	result := Err[int](fmt.Errorf("error"))
 	if _, ok := result.Ok(); ok {
 		t.Error("result is not err")
 	}
 }
 
-func TestErr(t *testing.T) {
+func TestResultErr(t *testing.T) {
 	result := Err[int](fmt.Errorf("error"))
 	if err, ok := result.Err(); ok {
 		if err.Error() != "error" {
@@ -34,14 +34,14 @@ func TestErr(t *testing.T) {
 	}
 }
 
-func TestErrFail(t *testing.T) {
+func TestResultErrFail(t *testing.T) {
 	result := Ok[int](10)
 	if _, ok := result.Err(); ok {
 		t.Error("result is not ok")
 	}
 }
 
-func TestUnwrapOn(t *testing.T) {
+func TestResultUnwrap(t *testing.T) {
 	result := Ok[int](10)
 	x := result.Unwrap()
 	if x != 10 {
@@ -49,7 +49,7 @@ func TestUnwrapOn(t *testing.T) {
 	}
 }
 
-func TestUnwrapOnErr(t *testing.T) {
+func TestResultUnwrapPanic(t *testing.T) {
 	defer func() {
 		if r := recover(); r == nil {
 			t.Errorf("The result did not panic")

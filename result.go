@@ -1,7 +1,5 @@
 package types
 
-import "fmt"
-
 type Result[T any] struct {
 	value any
 	err   error
@@ -44,7 +42,7 @@ func (o *Result[T]) Unwrap() T {
 	if value, ok := o.Ok(); ok {
 		return value
 	}
-	panic(fmt.Sprintf("unwrapped result with error: %s", o.err))
+	panic(o.err)
 }
 
 func (o *Result[T]) Option() Option[T] {

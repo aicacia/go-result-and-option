@@ -2,7 +2,7 @@ package types
 
 import "testing"
 
-func TestSome(t *testing.T) {
+func TestOptionSome(t *testing.T) {
 	some := Some[int](10)
 	var x int
 	if y, ok := some.Some(); ok {
@@ -15,14 +15,14 @@ func TestSome(t *testing.T) {
 	}
 }
 
-func TestNone(t *testing.T) {
+func TestOptionNone(t *testing.T) {
 	none := None[int]()
 	if none.IsSome() {
 		t.Error("option is some")
 	}
 }
 
-func TestTake(t *testing.T) {
+func TestOptionTake(t *testing.T) {
 	some := Some[int](10)
 	var y int
 	if x, ok := some.Take(); ok {
@@ -31,4 +31,25 @@ func TestTake(t *testing.T) {
 	if y != 10 {
 		t.Error("option value is not 10")
 	}
+	if some.IsSome() {
+		t.Error("taken option is still some")
+	}
+}
+
+func TestOptionUnwrap(t *testing.T) {
+	some := Some[int](10)
+	y := some.Unwrap()
+	if y != 10 {
+		t.Error("option value is not 10")
+	}
+}
+
+func TestOptionUnwrapPanic(t *testing.T) {
+	defer func() {
+		if r := recover(); r == nil {
+			t.Error("should panic")
+		}
+	}()
+	none := None[int]()
+	none.Unwrap()
 }

@@ -37,7 +37,7 @@ func (o *Option[T]) Unwrap() T {
 	if value, ok := o.Some(); ok {
 		return value
 	}
-	panic("unwrap on None")
+	panic(ErrNone)
 }
 
 func (o *Option[T]) Take() (T, bool) {
