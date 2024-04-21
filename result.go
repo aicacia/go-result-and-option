@@ -45,6 +45,13 @@ func (o *Result[T]) Unwrap() T {
 	panic(o.err)
 }
 
+func (o *Result[T]) UnwrapErr() error {
+	if err, ok := o.Err(); ok {
+		return err
+	}
+	panic(o.value)
+}
+
 func (o *Result[T]) Option() Option[T] {
 	if value, ok := o.Ok(); ok {
 		return Some(value)
