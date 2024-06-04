@@ -1,4 +1,4 @@
-package types
+package result_and_option
 
 import (
 	"fmt"
@@ -23,7 +23,7 @@ func TestResultOk(t *testing.T) {
 func TestResultOkFail(t *testing.T) {
 	result := Err[int](errTestError)
 	if _, ok := result.Ok(); ok {
-		t.Error("result is not err")
+		t.Error("result is not an error")
 	}
 }
 

@@ -1,4 +1,4 @@
-package types
+package result_and_option
 
 import "fmt"
 
