@@ -7,6 +7,29 @@ import (
 
 var errTestError = fmt.Errorf("error")
 
+func TestFrom(t *testing.T) {
+	r1 := From(10, nil)
+	if value, err := r1.Get(); value != 10 || err != nil {
+		t.Errorf("invalid result value or error: (%v, %v)", value, err)
+	}
+	r2 := From(0, errTestError)
+	if value, err := r2.Get(); value != 0 || err != errTestError {
+		t.Errorf("invalid result value or error: (%v, %v)", value, err)
+	}
+	r3 := From(func() (int, error) {
+		return 10, nil
+	}())
+	if value, err := r3.Get(); value != 10 || err != nil {
+		t.Errorf("invalid result value or error: (%v, %v)", value, err)
+	}
+	r4 := From(func() (int, error) {
+		return 0, errTestError
+	}())
+	if value, err := r4.Get(); value != 0 || err != errTestError {
+		t.Errorf("invalid result value or error: (%v, %v)", value, err)
+	}
+}
+
 func TestResultOk(t *testing.T) {
 	result := Ok(10)
 	var x int

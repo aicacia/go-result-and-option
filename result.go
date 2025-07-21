@@ -5,6 +5,10 @@ type Result[T any] struct {
 	err   error
 }
 
+func From[T any](value T, err error) Result[T] {
+	return Result[T]{value, err}
+}
+
 func Err[T any](err error) Result[T] {
 	return Result[T]{value: nil, err: err}
 }
