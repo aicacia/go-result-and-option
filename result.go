@@ -21,6 +21,15 @@ func (o *Result[T]) IsOk() bool {
 	return !o.IsErr()
 }
 
+func (o *Result[T]) Get() (T, error) {
+	if o.err != nil {
+		var zero T
+		return zero, o.err
+	} else {
+		return o.value.(T), nil
+	}
+}
+
 func (o *Result[T]) Ok() (T, bool) {
 	if o.IsErr() {
 		var zero T

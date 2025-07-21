@@ -70,6 +70,22 @@ func TestResultUnwrapErr(t *testing.T) {
 	}
 }
 
+func TestResultGet(t *testing.T) {
+	result := Ok(1)
+	if count, err := result.Get(); count != 1 {
+		t.Errorf("The count is not 1")
+	} else if err != nil {
+		t.Errorf("The error is not nil")
+	}
+}
+
+func TestResultGetErr(t *testing.T) {
+	result := Err[int](errTestError)
+	if _, err := result.Get(); err != errTestError {
+		t.Error("result error is not an error")
+	}
+}
+
 func TestResultUnwrapErrPanic(t *testing.T) {
 	defer func() {
 		if r := recover(); r == nil {
